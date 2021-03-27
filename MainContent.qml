@@ -42,7 +42,7 @@ Rectangle {
         anchors.margins: 10
 
         onFocusOnMe: { currentLane = leftLane; otherLane = rightLane; }
-        data: BrowserLeft
+        backendData: BrowserLeft
     }
 
     Lane {
@@ -54,7 +54,7 @@ Rectangle {
         anchors.margins: 10
 
         onFocusOnMe: { currentLane = rightLane; otherLane = leftLane; }
-        data: BrowserRight
+        backendData: BrowserRight
     }
 
     function doMove(fromPath, toPath){

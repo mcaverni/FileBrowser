@@ -8,7 +8,7 @@ Item {
     // the external world needs to know what's selected
     property string selection: "" // when this is empty, the buttons must be disabled
     property alias text: myInputText.text
-    property alias data: myListBrowser.model
+    property var backendData
     signal focusOnMe
 
     Rectangle {
@@ -30,7 +30,8 @@ Item {
             clip: true // dynamic content: better to clip it!
             onFocusChanged: { if(focus) focusOnMe(); }
 
-            // model: will be set from outside
+            model: backendData
+
             delegate: RowDelegate {
                 width: myListBrowser.width
             }
