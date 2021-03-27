@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>ButtonBar.qml</file>
+        <file>Lane.qml</file>
+        <file>MainContent.qml</file>
+        <file>Style.qml</file>
+        <file>RowDelegate.qml</file>
+    </qresource>
+</RCC>
