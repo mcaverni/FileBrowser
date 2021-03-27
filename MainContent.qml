@@ -1,14 +1,16 @@
-import QtQuick 2.0
+import QtQuick 2.7
+import app.style 1.0
 
 Rectangle {
     id: rectangle
-    color: Style.colors.background
+    color: Style.main.background
 
     // the focus can be on right or on left
     property var currentLane: null
+    property var otherLane: null
 
     onCurrentLaneChanged: {
-        console.log(currentLane);
+        console.log(currentLane, otherLane);
     }
 
     ButtonBar {
@@ -17,6 +19,18 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: 10
         anchors.topMargin: 10
+
+        onCopy: doCopy(currentLane.selection, otherLane.selection)
+        onMove: doMove(currentLane.selection, otherLane.selection)
+        onRemove: doRemove(currentLane.selection)
+
+        enabled: {
+            if(currentLane !== null && currentLane.selection !== ""){
+                if(otherLane !== null && otherLane.selection !== "")
+                    return true;
+            }
+            return false;
+        }
     }
 
     Lane {
@@ -26,7 +40,9 @@ Rectangle {
         anchors.top: buttonBar.bottom
         anchors.bottom: parent.bottom
         anchors.margins: 10
-        onFocusOnMe: currentLane = this
+
+        onFocusOnMe: { currentLane = leftLane; otherLane = rightLane; }
+        data: BrowserLeft
     }
 
     Lane {
@@ -36,7 +52,21 @@ Rectangle {
         anchors.top: buttonBar.bottom
         anchors.bottom: parent.bottom
         anchors.margins: 10
-        onFocusOnMe: currentLane = this
+
+        onFocusOnMe: { currentLane = rightLane; otherLane = leftLane; }
+        data: BrowserRight
+    }
+
+    function doMove(fromPath, toPath){
+        // TODO
+    }
+
+    function doCopy(fromPath, toPath){
+        // TODO
+    }
+
+    function doRemove(filePath){
+        // TODO
     }
 }
 

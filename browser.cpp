@@ -16,14 +16,26 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-If not, please request a copy in writing from Frigel Firenze at the address below.
-If you have questions concerning this license or the applicable additional terms,
-you may contact in writing Frigel Firenze, Via Pisana, 316, 50018 Scandicci FI.
+If not, please request a copy in writing from Frigel Firenze at the address
+below. If you have questions concerning this license or the applicable
+additional terms, you may contact in writing Frigel Firenze, Via Pisana, 316,
+50018 Scandicci FI.
 ===================================================================================
 */
-#include "mylistmodel.h"
+#include "browser.h"
 
-MyListModel::MyListModel()
-{
-
+Browser::Browser() {
+  // start from $HOME on creation
+  myDir.setPath(QDir::homePath());
 }
+
+QModelIndex Browser::index(int row, int column,
+                           const QModelIndex &parent) const {}
+
+QModelIndex Browser::parent(const QModelIndex &child) const {}
+
+int Browser::rowCount(const QModelIndex &parent) const {}
+
+int Browser::columnCount(const QModelIndex &parent) const {}
+
+QVariant Browser::data(const QModelIndex &index, int role) const {}

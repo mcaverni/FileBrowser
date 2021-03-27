@@ -16,22 +16,34 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-If not, please request a copy in writing from Frigel Firenze at the address below.
-If you have questions concerning this license or the applicable additional terms,
-you may contact in writing Frigel Firenze, Via Pisana, 316, 50018 Scandicci FI.
+If not, please request a copy in writing from Frigel Firenze at the address
+below. If you have questions concerning this license or the applicable
+additional terms, you may contact in writing Frigel Firenze, Via Pisana, 316,
+50018 Scandicci FI.
 ===================================================================================
 */
-#ifndef MYLISTMODEL_H
-#define MYLISTMODEL_H
+#ifndef BROWSER_H
+#define BROWSER_H
 
-#include <QAbstractItemModel>
+#include <QAbstractListModel>
+#include <QDir>
 #include <QObject>
 
-class MyListModel : public QAbstractItemModel
-{
-    Q_OBJECT
+class Browser : public QAbstractListModel {
+  Q_OBJECT
+
+  QDir myDir;
+
 public:
-    MyListModel();
+  Browser();
+
+  // QAbstractItemModel interface
+public:
+  QModelIndex index(int row, int column, const QModelIndex &parent) const;
+  QModelIndex parent(const QModelIndex &child) const;
+  int rowCount(const QModelIndex &parent) const;
+  int columnCount(const QModelIndex &parent) const;
+  QVariant data(const QModelIndex &index, int role) const;
 };
 
-#endif // MYLISTMODEL_H
+#endif // BROWSER_H

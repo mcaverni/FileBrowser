@@ -1,83 +1,93 @@
-import QtQuick 2.0
+import QtQuick 2.7
 import QtQuick.Controls 2.0
+import app.style 1.0
 
 Item {
-    id: rectangle
-
     // this item can be istantiated as many times we want!
 
     // the external world needs to know what's selected
-    property string selectedItemPath: "" // when this is empty, the buttons must be disabled
-    property alias textBrowserPath: myTextBrowser.text
-
-
-   signal focusOnMe
+    property string selection: "" // when this is empty, the buttons must be disabled
+    property alias text: myInputText.text
+    property alias data: myListBrowser.model
+    signal focusOnMe
 
     Rectangle {
-        id: myNavigator
-
         // dynamic, for resize: no width/height provided
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
-        anchors.bottom: myBrowser.top
+        anchors.bottom: myInputTool.top
         anchors.bottomMargin: 10 // between the bottom browser and the upper listview
 
-        border.color: "black"
+        border.color: Style.list.border
+        color: Style.list.background
         border.width: 2
         radius: 2
 
         ListView {
-            id: myListNavigator
+            id: myListBrowser
             anchors.fill: parent
             clip: true // dynamic content: better to clip it!
-            onFocusChanged: {if(focus) focusOnMe();}
+            onFocusChanged: { if(focus) focusOnMe(); }
 
+            // model: will be set from outside
             delegate: RowDelegate {
-                injectedModel: modelData
+                width: myListBrowser.width
             }
         }
     }
 
 
 
-    Row {
-        id: myBrowser
-        height: 50
+
+    Rectangle {
+        id: myInputTool
+        height: 30
         // dynamic, for resize: no width provided, only height
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
-        TextEdit {
-            id: myTextBrowser
+        color: Style.input.background
+        border.width: 2
+        border.color: Style.input.border
 
-            height: parent.height
-            width: myNavigator.width - myGoButton.width
-            clip: true // dynamic content: better to clip it!
+        Row {
+            anchors.fill: parent
 
-            horizontalAlignment: Text.AlignLeft
-            verticalAlignment: Text.AlignBottom
-            color: Style.colors.text
+            TextEdit {
+                id: myInputText
 
-            onFocusChanged: {if(focus) focusOnMe();}
-        }
+                height: parent.height
+                width: myInputTool.width - myInputButton.width
+                clip: true // dynamic content: better to clip it!
 
-        Button {
-            id: myGoButton
-            height: parent.height
-            width: 40
-            text: qsTr("GO!")
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignBottom
+                color: Style.input.text
 
-            // dynamic enable/disable
-            enabled: myTextBrowser.text.length > 0
+                text: "/test/of/path"
 
-            onClicked: {
-                // TODO: refresh the backend
-                focusOnMe();
+                onFocusChanged: { if(focus) focusOnMe(); }
+            }
+
+            Button {
+                id: myInputButton
+                height: parent.height
+                width: 40
+                text: qsTr("GO!")
+
+                // dynamic enable/disable
+                enabled: myInputText.text.length > 0
+
+                onClicked: {
+                    // TODO: refresh the backend
+                    focusOnMe();
+                }
             }
         }
     }
+
 }
 
 /*##^##
