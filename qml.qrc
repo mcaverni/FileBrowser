@@ -6,5 +6,6 @@
         <file>MainContent.qml</file>
         <file>Style.qml</file>
         <file>RowDelegate.qml</file>
+        <file>Confirm.qml</file>
     </qresource>
 </RCC>

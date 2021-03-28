@@ -82,8 +82,8 @@ Item {
                 enabled: myInputText.text.length > 0
 
                 onClicked: {
-                    // TODO: refresh the backend
                     focusOnMe();
+                    backendData.browse(myInputText.text);
                 }
             }
         }

@@ -10,7 +10,11 @@ Rectangle {
     property var otherLane: null
 
     onCurrentLaneChanged: {
-        console.log(currentLane, otherLane);
+        console.log("focus on:", currentLane);
+    }
+
+    onOtherLaneChanged: {
+        console.log("focus off:", otherLane);
     }
 
     ButtonBar {
@@ -58,15 +62,24 @@ Rectangle {
     }
 
     function doMove(fromPath, toPath){
-        // TODO
+        if(!confirm())
+            return;
+        console.log("moving:", fromPath, "--->", toPath);
+        currentLane.move(fromPath, toPath);
     }
 
     function doCopy(fromPath, toPath){
-        // TODO
+        if(!confirm())
+            return;
+        console.log("copying:", fromPath, "--->", toPath);
+        currentLane.copy(fromPath, toPath);
     }
 
     function doRemove(filePath){
-        // TODO
+        if(!confirm())
+            return;
+        console.log("deleting:", filePath);
+        currentLane.copy(filePath);
     }
 }
 

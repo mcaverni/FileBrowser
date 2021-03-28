@@ -26,6 +26,7 @@ additional terms, you may contact in writing Frigel Firenze, Via Pisana, 316,
 #define BROWSER_H
 
 #include <QAbstractListModel>
+#include <QDebug>
 #include <QDir>
 #include <QObject>
 
@@ -36,6 +37,12 @@ class Browser : public QAbstractListModel {
 
 public:
   Browser();
+
+  Q_INVOKABLE void browse(QString newPlace);
+
+  Q_INVOKABLE void copy(QString fromPath, QString toPath);
+  Q_INVOKABLE void move(QString fromPath, QString toPath);
+  Q_INVOKABLE void remove(QString path);
 
   // QAbstractItemModel interface
 public:

@@ -29,6 +29,17 @@ Browser::Browser() {
   myDir.setPath(QDir::homePath());
 }
 
+void Browser::browse(QString newPlace) {
+  // TODO
+  qDebug() << "opening location:" << newPlace;
+}
+
+void Browser::copy(QString fromPath, QString toPath) {}
+
+void Browser::move(QString fromPath, QString toPath) {}
+
+void Browser::remove(QString path) {}
+
 QModelIndex Browser::index(int row, int column,
                            const QModelIndex &parent) const {}
 
