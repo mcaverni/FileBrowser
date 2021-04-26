@@ -15,6 +15,7 @@ Item {
     readonly property QtObject input: QtObject {
         property color backgroundColor: "lightyellow"
         property color borderColor: "black"
+        property color borderColorError: "red"
         property int borderWidth: 2
 
         property color textColor: "black"

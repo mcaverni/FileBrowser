@@ -25,13 +25,25 @@ additional terms, you may contact in writing Frigel Firenze, Via Pisana, 316,
 #include "browser.h"
 
 Browser::Browser(QDir startDir) {
-  // start from $HOME on creation
-  myDir = startDir;
+  mCurrentDir = startDir;
+  connect(this, &Browser::currentPathChanged, this, &Browser::contentChanged);
+  setCurrentPath(mCurrentDir.absolutePath());
 }
 
-void Browser::browse(QString newPlace) {
-  // TODO
-  qDebug() << "opening location:" << newPlace;
+void Browser::down(QString subDirName) {
+  qDebug() << "entering folder:" << subDirName;
+  if (mCurrentDir.cd(subDirName)) {
+    emit currentPathChanged();
+    qInfo() << "folder changed";
+  }
+}
+
+void Browser::up() {
+  qDebug() << "back to parent folder";
+  if (mCurrentDir.cdUp()) {
+    emit currentPathChanged();
+    qInfo() << "folder changed";
+  }
 }
 
 void Browser::copy(QString fromPath, QString toPath) {}
@@ -39,6 +51,10 @@ void Browser::copy(QString fromPath, QString toPath) {}
 void Browser::move(QString fromPath, QString toPath) {}
 
 void Browser::remove(QString path) {}
+
+void Browser::newFolder(QString path) {}
+
+void Browser::rename(QString fromPath, QString toPath) {}
 
 QModelIndex Browser::index(int row, int column,
                            const QModelIndex &parent) const {}
@@ -50,3 +66,24 @@ int Browser::rowCount(const QModelIndex &parent) const {}
 int Browser::columnCount(const QModelIndex &parent) const {}
 
 QVariant Browser::data(const QModelIndex &index, int role) const {}
+
+QString Browser::currentPath() const { return mCurrentDir.absolutePath(); }
+
+void Browser::setCurrentPath(QString newPath) {
+  if (mCurrentDir.absolutePath() != newPath) {
+    if (isValidDir(newPath)) {
+      mCurrentDir.setPath(newPath);
+      emit currentPathChanged();
+      qInfo() << "folder changed";
+    } else {
+      emit wrongPathRequested();
+    }
+  } else {
+    emit rightPathRequested();
+  }
+}
+
+bool Browser::isValidDir(QString dirPath) const {
+  QFileInfo f(dirPath);
+  return f.isDir() && f.exists();
+}

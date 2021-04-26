@@ -37,7 +37,6 @@ int main(int argc, char *argv[]) {
 #endif
 
   QGuiApplication app(argc, argv);
-  QQmlApplicationEngine engine;
   app.setApplicationName("filebrowser");
   app.setApplicationVersion(QString::number(APP_VERSION));
   app.setApplicationDisplayName("File Broser");
@@ -47,6 +46,7 @@ int main(int argc, char *argv[]) {
   qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:///Style.qml")),
                            "app.style", 1, 0, "Style");
 
+  QQmlApplicationEngine engine;
   Browser *left =
       new Browser(QDir::home()); // <-- could be loaded from history file .conf
   engine.rootContext()->setContextProperty("BrowserLeft", left);

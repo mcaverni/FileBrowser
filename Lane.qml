@@ -24,6 +24,29 @@ Item {
     property var backendData
     signal focusOnMe
 
+    states: [
+        State {
+            name: "pathError"
+            PropertyChanges {
+                target: myInputTool
+                border.color: Style.input.borderColorError
+            }
+        }
+    ]
+
+    Connections {
+        target: backendData
+        onWrongPathRequested: state = "pathError"
+        onRightPathRequested: state = ""
+        onCurrentPathChanged: {
+            // display always the correct path ("up" and "down" operations may change it)
+            myInputText.text = backendData.currentPath
+            state = ""
+        }
+    }
+
+    Component.onCompleted: myInputText.text = backendData.currentPath
+
     Rectangle {
         // dynamic, for resize: no width/height provided
         anchors.left: parent.left
@@ -70,7 +93,7 @@ Item {
             anchors.fill: parent
             anchors.margins: 4
 
-            TextEdit {
+            TextInput {
                 id: myInputText
 
                 height: parent.height
@@ -82,9 +105,10 @@ Item {
                 color: Style.input.textColor
                 font.pointSize: Style.input.textFontSize
 
-                text: "/test/of/path"
+                text: "/this/is/a/wrong/path"
 
                 onFocusChanged: { if(focus) focusOnMe(); }
+                Keys.onReturnPressed: doNavigate()
             }
 
             Button {
@@ -99,12 +123,14 @@ Item {
                 // dynamic enable/disable
                 enabled: myInputText.text.length > 0
 
-                onClicked: {
-                    focusOnMe();
-                    backendData.browse(myInputText.text);
-                }
+                onClicked: doNavigate()
             }
         }
+    }
+
+    function doNavigate() {
+        focusOnMe();
+        backendData.currentPath = myInputText.text;
     }
 
 }

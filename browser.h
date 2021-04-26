@@ -32,17 +32,31 @@ additional terms, you may contact in writing Frigel Firenze, Via Pisana, 316,
 
 class Browser : public QAbstractListModel {
   Q_OBJECT
+  Q_PROPERTY(QString currentPath READ currentPath WRITE setCurrentPath NOTIFY
+                 currentPathChanged);
 
-  QDir myDir;
+public: // Q_PROPERTY interface
+  QString currentPath() const;
+  void setCurrentPath(QString newPath);
+
+signals:
+  void currentPathChanged();
+  void rightPathRequested();
+  void wrongPathRequested();
 
 public:
   Browser(QDir startDir = QDir::home());
 
-  Q_INVOKABLE void browse(QString newPlace);
+  // QML navigation on click (or keyboard...)
+  Q_INVOKABLE void down(QString subDir);
+  Q_INVOKABLE void up();
 
+  // QML button actions
   Q_INVOKABLE void copy(QString fromPath, QString toPath);
   Q_INVOKABLE void move(QString fromPath, QString toPath);
   Q_INVOKABLE void remove(QString path);
+  Q_INVOKABLE void newFolder(QString path);
+  Q_INVOKABLE void rename(QString fromPath, QString toPath);
 
   // QAbstractItemModel interface
 public:
@@ -51,6 +65,13 @@ public:
   int rowCount(const QModelIndex &parent) const;
   int columnCount(const QModelIndex &parent) const;
   QVariant data(const QModelIndex &index, int role) const;
+
+signals:
+  void contentChanged(); // only the content, the path is the same
+
+private:
+  bool isValidDir(QString dirPath) const;
+  QDir mCurrentDir; // the content displayed
 };
 
 #endif // BROWSER_H
