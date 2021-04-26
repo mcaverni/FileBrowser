@@ -6,9 +6,16 @@
         <file>MainContent.qml</file>
         <file>Style.qml</file>
         <file>RowDelegate.qml</file>
+        <file>messages.js</file>
         <file>Confirm.qml</file>
     </qresource>
     <qresource prefix="/icons">
         <file>programIcon.jpeg</file>
+        <file>document-4x.png</file>
+        <file>file-4x.png</file>
+        <file>folder-4x.png</file>
+        <file>hard-drive-4x.png</file>
+        <file>link-intact-4x.png</file>
+        <file>home-4x.png</file>
     </qresource>
 </RCC>

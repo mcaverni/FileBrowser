@@ -8,12 +8,15 @@ CONFIG += c++11
 
 SOURCES += \
         browser.cpp \
+        browser_virtuals.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
 
 TRANSLATIONS += \
-    FileBrowser_en_US.ts
+    FileBrowser_en_US.ts \
+    FileBrowser_it_IT.ts
+
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

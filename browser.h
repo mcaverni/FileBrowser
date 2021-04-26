@@ -30,14 +30,18 @@ additional terms, you may contact in writing Frigel Firenze, Via Pisana, 316,
 #include <QDir>
 #include <QObject>
 
+enum MyRoles { Icon = Qt::UserRole, Name, Type, Size, Path };
+
 class Browser : public QAbstractListModel {
   Q_OBJECT
+  QDir mCurrentDir; // the content displayed
   Q_PROPERTY(QString currentPath READ currentPath WRITE setCurrentPath NOTIFY
                  currentPathChanged);
 
 public: // Q_PROPERTY interface
   QString currentPath() const;
   void setCurrentPath(QString newPath);
+  bool isValidDir(QString dirPath) const;
 
 signals:
   void currentPathChanged();
@@ -58,20 +62,17 @@ public:
   Q_INVOKABLE void newFolder(QString path);
   Q_INVOKABLE void rename(QString fromPath, QString toPath);
 
-  // QAbstractItemModel interface
-public:
-  QModelIndex index(int row, int column, const QModelIndex &parent) const;
-  QModelIndex parent(const QModelIndex &child) const;
-  int rowCount(const QModelIndex &parent) const;
-  int columnCount(const QModelIndex &parent) const;
-  QVariant data(const QModelIndex &index, int role) const;
-
 signals:
   void contentChanged(); // only the content, the path is the same
 
-private:
-  bool isValidDir(QString dirPath) const;
-  QDir mCurrentDir; // the content displayed
+  // QAbstractItemModel interface (see in browser_virtuals.cpp)
+public:
+  //  QModelIndex index(int row, int column, const QModelIndex &parent) const;
+  //  QModelIndex parent(const QModelIndex &child) const;
+  //  int columnCount(const QModelIndex &parent) const;
+  int rowCount(const QModelIndex &parent) const;
+  QVariant data(const QModelIndex &index, int role) const;
+  QHash<int, QByteArray> roleNames() const;
 };
 
 #endif // BROWSER_H

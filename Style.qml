@@ -24,13 +24,13 @@ Item {
     }
 
     readonly property QtObject popup: QtObject {
-        property color backgroundColor: "lightyellow"
+        property color backgroundColor: "#d8f0f2"
         property color borderColor: "black"
         property int borderWidth: 2
 
         property color textColor: "black"
-        property int textFontSize: 25 // points
-        property bool textFontBold: true
+        property int textFontSize: 14 // points
+        property bool textFontBold: false
     }
 
     readonly property QtObject buttons: QtObject {
@@ -43,6 +43,9 @@ Item {
         property color backgroundColor: "white"
         property color borderColor: "black"
         property int borderWidth: 2
+
+        property color highlightColor: "cyan"
+        property double highlightOpacity: 0.4
 
         property color textColor: "black"
         property int textFontSize: 12 // points

@@ -1,45 +1,61 @@
-import QtQuick 2.7
+import QtQuick 2.0
 import QtQuick.Controls 2.0
+import app.style 1.0
 
-Rectangle {
-    height: 200
-    width: 200
+Popup {
+    modal: true
+    dim: true
+    padding: 30
+    closePolicy: Popup.CloseOnEscape
 
-    property alias text: message.text
+    background: Rectangle {
+        color: Style.popup.backgroundColor
+        border.width: Style.popup.borderWidth
+        border.color: Style.popup.borderColor
+    }
 
-    signal confirm()
-    signal cancel()
+    property var action: null
+    property string message: ""
 
-    Rectangle {
-        id: rectangle
-
+    contentItem: Item {
+        id: item1
         Text {
-            id: message
-            width: 200
-            height: 40
-            anchors.centerIn: parent
+            text: message
+            color: Style.popup.textColor
+            font.pointSize: Style.popup.textFontSize
+            font.bold: Style.popup.textFontBold
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width
+            height: parent.height / 2
+            horizontalAlignment: Text.AlignLeft
+            wrapMode: Text.WordWrap
         }
 
         Button {
-            height: 30
-            width: 50
-            text: qsTr("Yes")
-            anchors.right: parent.horizontalCenter
+            text: qsTr("Confirm")
+            font.pointSize: Style.buttons.textFontSize
+            font.bold: Style.buttons.textFontBold
+            anchors.left: parent.left
             anchors.bottom: parent.bottom
-            anchors.rightMargin: -100
-            onClicked: confirm()
+            anchors.leftMargin: 10
+            anchors.bottomMargin: 10
+            onPressed: {
+                if(action !== null)
+                    action();
+                close();
+            }
         }
 
+
         Button {
-            height: 30
-            width: 50
-            text: qsTr("No")
-            anchors.left: parent.horizontalCenter
+            text: qsTr("Cancel")
+            font.pointSize: Style.buttons.textFontSize
+            font.bold: Style.buttons.textFontBold
+            anchors.right: parent.right
             anchors.bottom: parent.bottom
-            anchors.leftMargin: 100
-            onClicked: cancel()
+            anchors.rightMargin: 10
+            anchors.bottomMargin: 10
+            onPressed: close()
         }
     }
 }
-
-

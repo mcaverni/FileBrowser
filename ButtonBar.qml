@@ -18,14 +18,16 @@ Row {
     // ** custom properties
 
     // to control everything from one place
-    property int buttonHeight: 40
-    property int buttonWidth: 150
+    property int buttonHeight: 30
+    property int buttonWidth: 110
 
     property bool actionEnabled: false
 
     signal copy()
     signal move()
     signal remove()
+    signal newFolder(var folderName)
+    signal rename(var fileName)
     // **
 
     // stuff of the Row
@@ -34,7 +36,6 @@ Row {
     width: buttonWidth * 3 + spacing * 2
 
     Button {
-        id: copy
         text: qsTr("Copy")
         font.pointSize: Style.buttons.textFontSize
         font.bold: Style.buttons.textFontBold
@@ -47,7 +48,6 @@ Row {
     }
 
     Button {
-        id: move
         text: qsTr("Move")
         font.pointSize: Style.buttons.textFontSize
         font.bold: Style.buttons.textFontBold
@@ -61,11 +61,9 @@ Row {
 
     Button {
         // stuff of the button
-        id: remove
         text: qsTr("Delete")
         font.pointSize: Style.buttons.textFontSize
         font.bold: Style.buttons.textFontBold
-
         height: parent.buttonHeight
         width: parent.buttonWidth
 
@@ -74,5 +72,29 @@ Row {
 
         // each button's specific action to notify to the external
         onClicked: remove()
+    }
+
+    Button {
+        text: qsTr("Rename")
+        font.pointSize: Style.buttons.textFontSize
+        font.bold: Style.buttons.textFontBold
+        height: parent.buttonHeight
+        width: parent.buttonWidth
+
+        enabled: parent.actionEnabled
+
+        onClicked: rename("test")
+    }
+
+    Button {
+        text: qsTr("New Folder")
+        font.pointSize: Style.buttons.textFontSize
+        font.bold: Style.buttons.textFontBold
+        height: parent.buttonHeight
+        width: parent.buttonWidth
+
+        enabled: parent.actionEnabled
+
+        onClicked: newFolder("test")
     }
 }

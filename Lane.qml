@@ -19,10 +19,10 @@ Item {
     // this item can be istantiated as many times we want!
 
     // the external world needs to know what's selected
-    property string selection: "" // when this is empty, the buttons must be disabled
-    property alias text: myInputText.text
+    property var selection: null // when this is empty, the buttons must be disabled
     property var backendData
-    signal focusOnMe
+    property alias text: myInputText.text
+    signal selected
 
     states: [
         State {
@@ -45,8 +45,6 @@ Item {
         }
     }
 
-    Component.onCompleted: myInputText.text = backendData.currentPath
-
     Rectangle {
         // dynamic, for resize: no width/height provided
         anchors.left: parent.left
@@ -63,13 +61,28 @@ Item {
         ListView {
             id: myListBrowser
             anchors.fill: parent
-            clip: true // dynamic content: better to clip it!
-            onFocusChanged: { if(focus) focusOnMe(); }
+            anchors.margins: 3
+            currentIndex: -1
+            clip: true // variable height of content: better to clip it!
+
+
 
             model: backendData
 
             delegate: RowDelegate {
                 width: myListBrowser.width
+                onItemClicked: select(index)
+                onItemDoubleClicked: {
+                    if(index === 0)
+                        backendData.up();
+                    else
+                        backendData.down(name);
+                }
+            }
+
+            highlight: Rectangle {
+                color: Style.list.highlightColor
+                opacity: Style.list.highlightOpacity
             }
         }
     }
@@ -105,9 +118,8 @@ Item {
                 color: Style.input.textColor
                 font.pointSize: Style.input.textFontSize
 
-                text: "/this/is/a/wrong/path"
+                text: String(backendData.currentPath) // not binding the Q_PROPERTY, only a string to begin execution
 
-                onFocusChanged: { if(focus) focusOnMe(); }
                 Keys.onReturnPressed: doNavigate()
             }
 
@@ -129,10 +141,26 @@ Item {
     }
 
     function doNavigate() {
-        focusOnMe();
+        deselect();
         backendData.currentPath = myInputText.text;
     }
 
+    function select(index){
+        if(index === 0)
+            deselect();
+        else{
+            myListBrowser.currentIndex = index;
+            if(myListBrowser.currentItem !== undefined){
+                selection = myListBrowser.currentItem.absolutePath;
+                selected();
+            }
+        }
+    }
+
+    function deselect(){
+        myListBrowser.currentIndex = -1;
+        selection = null;
+    }
 }
 
 /*##^##
