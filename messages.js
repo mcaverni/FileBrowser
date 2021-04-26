@@ -19,8 +19,8 @@ function getRenameMessage(file1, file2) {
     return s;
 }
 
-function getDeleteMessage(file1) {
-    var s = qsTr("Do you want to delete\n<file1>\nforever?");
+function getRemoveMessage(file1) {
+    var s = qsTr("Do you want to remove\n<file1>\nforever?");
     s = s.replace("<file1>", file1);
     return s;
 }

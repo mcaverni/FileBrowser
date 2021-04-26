@@ -54,15 +54,25 @@ void Browser::up() {
   }
 }
 
-void Browser::copy(QString fromPath, QString toPath) {}
+void Browser::copy(QString fromPath, QString toPath) {
+  // TODO: implement
+}
 
-void Browser::move(QString fromPath, QString toPath) {}
+void Browser::move(QString fromPath, QString toPath) {
+  // TODO: implement
+}
 
-void Browser::remove(QString path) {}
+void Browser::remove(QString path) {
+  // TODO: implement
+}
 
-void Browser::newFolder(QString path) {}
+void Browser::newFolder(QString path) {
+  // TODO: implement
+}
 
-void Browser::rename(QString fromPath, QString toPath) {}
+void Browser::rename(QString fromPath, QString toPath) {
+  // TODO: implement
+}
 
 QString Browser::currentPath() const { return mCurrentDir.absolutePath(); }
 

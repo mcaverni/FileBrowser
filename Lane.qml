@@ -71,13 +71,8 @@ Item {
 
             delegate: RowDelegate {
                 width: myListBrowser.width
-                onItemClicked: select(index)
-                onItemDoubleClicked: {
-                    if(index === 0)
-                        backendData.up();
-                    else
-                        backendData.down(name);
-                }
+                onItemClicked: selectItem(index, name)
+                onItemDoubleClicked: doubleClickItem(index, name)
             }
 
             highlight: Rectangle {
@@ -120,7 +115,7 @@ Item {
 
                 text: String(backendData.currentPath) // not binding the Q_PROPERTY, only a string to begin execution
 
-                Keys.onReturnPressed: doNavigate()
+                Keys.onReturnPressed: changeCurrentPath()
             }
 
             Button {
@@ -135,31 +130,36 @@ Item {
                 // dynamic enable/disable
                 enabled: myInputText.text.length > 0
 
-                onClicked: doNavigate()
+                onClicked: changeCurrentPath()
             }
         }
     }
 
-    function doNavigate() {
-        deselect();
+    function changeCurrentPath() {
+        deselectItem();
         backendData.currentPath = myInputText.text;
     }
 
-    function select(index){
+    function selectItem(index, name){
         if(index === 0)
-            deselect();
+            deselectItem();
         else{
             myListBrowser.currentIndex = index;
-            if(myListBrowser.currentItem !== undefined){
-                selection = myListBrowser.currentItem.absolutePath;
-                selected();
-            }
+            selection = name;
+            selected();
         }
     }
 
-    function deselect(){
+    function deselectItem(){
         myListBrowser.currentIndex = -1;
         selection = null;
+    }
+
+    function doubleClickItem(index, name){
+        if(index === 0)
+            backendData.up();
+        else
+            backendData.down(name);
     }
 }
 

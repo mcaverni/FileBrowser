@@ -11,10 +11,10 @@ Rectangle {
     Keys.onEscapePressed: {
         // @selection: when ESC is pressed, the current lane is deselected as well
         if(currentLane !== null)
-            currentLane.deselect();
+            currentLane.deselectItem();
         // @selection: making sure that also the other lane is deselected, won't do no harm :)
         if(otherLane !== null)
-            otherLane.deselect();
+            otherLane.deselectItem();
         // @selection: this will make the buttons inactive
         currentLane = null;
         otherLane = null;
@@ -39,7 +39,7 @@ Rectangle {
         else{
             // @selection: the de-selection is handled (of course) by the MainContent item who knows which lane is selected and which not
             console.debug("other:    ", otherLane);
-            otherLane.deselect();
+            otherLane.deselectItem();
         }
     }
 
@@ -96,7 +96,6 @@ Rectangle {
         id: confirmPopup
         width: 400
         height: 200
-        onClosed: parent.focus = true
     }
 
     function doCopy(fromPath, toPath){
@@ -118,9 +117,9 @@ Rectangle {
     }
 
     function doRemove(thePath){
-        confirm(MessageProxy.getDeleteMessage(thePath),
+        confirm(MessageProxy.getRemoveMessage(thePath),
                 function(){
-                    console.log(">>> deleting:", thePath);
+                    console.log(">>> removing:", thePath);
                     BrowserLeft.remove(thePath);
                 }
                 );

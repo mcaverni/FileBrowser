@@ -25,7 +25,7 @@ Item {
             height: parent.height - 2
             width: parent.height - 2
             anchors.verticalCenter: parent.verticalCenter
-            source: icon // TODO: set base path
+            source: icon
         }
 
         Text {

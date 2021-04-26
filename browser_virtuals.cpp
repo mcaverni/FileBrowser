@@ -30,19 +30,6 @@ static QHash<int, QByteArray> myRoleNames = {{MyRoles::Icon, "icon"},
                                              {MyRoles::Path, "path"},
                                              {MyRoles::Size, "size"}};
 
-// QModelIndex Browser::parent(const QModelIndex &child) const {
-//  Q_UNUSED(child)
-//  return QModelIndex();
-//}
-
-// QModelIndex Browser::index(int row, int column,
-//                           const QModelIndex &parent) const {}
-
-// int Browser::columnCount(const QModelIndex &parent) const {
-//  Q_UNUSED(parent)
-//  return 1;
-//}
-
 int Browser::rowCount(const QModelIndex &parent) const {
   Q_UNUSED(parent)
   return mCurrentDir.count();

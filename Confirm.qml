@@ -4,9 +4,10 @@ import app.style 1.0
 
 Popup {
     modal: true
-    dim: true
-    padding: 30
     closePolicy: Popup.CloseOnEscape
+    onClosed: parent.focus = true
+    x: Math.round((parent.width - width) / 2)
+    y: Math.round((parent.height - height) / 2)
 
     background: Rectangle {
         color: Style.popup.backgroundColor

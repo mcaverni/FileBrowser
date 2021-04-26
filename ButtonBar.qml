@@ -60,7 +60,7 @@ Column {
 
         Button {
             // stuff of the button
-            text: qsTr("Delete")
+            text: qsTr("Remove")
             font.pointSize: Style.buttons.textFontSize
             font.bold: Style.buttons.textFontBold
             height: buttonHeight
