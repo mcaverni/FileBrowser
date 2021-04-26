@@ -57,7 +57,7 @@ Rectangle {
         onRename: doRename(currentLane.selection, fileName)
         onNewFolder: doNewFolder(currentLane.text, folderName)
 
-        actionEnabled: {
+        actionsEnabled: {
             if(currentLane !== null && currentLane.selection !== ""){
                 if(otherLane !== null)
                     return true;

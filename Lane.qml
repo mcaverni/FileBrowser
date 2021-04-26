@@ -99,7 +99,7 @@ Item {
         anchors.bottom: parent.bottom
 
         color: Style.input.backgroundColor
-        border.width: 2
+        border.width: Style.input.borderWidth
         border.color: Style.input.borderColor
 
         Row {

@@ -2,7 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import app.style 1.0
 
-Row {
+Column {
     /*
      * @Massimo
      * suggerimento: ugualmente, qui ho preferito racchiudere i bottoni in un componente
@@ -14,87 +14,109 @@ Row {
      * suggerimento: inoltre, i bottoni sono disabilitati, quando non hanno azioni che possono compiere (es: non ho selezionato niente da copiare, non posso copiare)
      * questo da' gia' immediatamente feedback all'utetnte
      */
-
-    // ** custom properties
-
-    // to control everything from one place
-    property int buttonHeight: 30
-    property int buttonWidth: 110
-
-    property bool actionEnabled: false
-
     signal copy()
     signal move()
     signal remove()
     signal newFolder(var folderName)
     signal rename(var fileName)
-    // **
 
-    // stuff of the Row
-    spacing: Style.buttons.spacing
-    height: buttonHeight
-    width: buttonWidth * 3 + spacing * 2
+    // to control everything from one place
+    property int buttonHeight: 30
+    property int buttonWidth: 110
+    property bool actionsEnabled: false
 
-    Button {
-        text: qsTr("Copy")
-        font.pointSize: Style.buttons.textFontSize
-        font.bold: Style.buttons.textFontBold
-        height: parent.buttonHeight
-        width: parent.buttonWidth
+    spacing: 10
+    width: buttonWidth * 5 + spacing * 4
 
-        enabled: parent.actionEnabled
+    Row {
+        // stuff of the Row
+        spacing: Style.buttons.spacing
+        height: buttonHeight
+        width: parent.width
 
-        onClicked: copy()
+        Button {
+            text: qsTr("Copy")
+            font.pointSize: Style.buttons.textFontSize
+            font.bold: Style.buttons.textFontBold
+            height: buttonHeight
+            width: buttonWidth
+
+            enabled: actionsEnabled
+
+            onClicked: copy()
+        }
+
+        Button {
+            text: qsTr("Move")
+            font.pointSize: Style.buttons.textFontSize
+            font.bold: Style.buttons.textFontBold
+            height: buttonHeight
+            width: buttonWidth
+
+            enabled: actionsEnabled
+
+            onClicked: move()
+        }
+
+        Button {
+            // stuff of the button
+            text: qsTr("Delete")
+            font.pointSize: Style.buttons.textFontSize
+            font.bold: Style.buttons.textFontBold
+            height: buttonHeight
+            width: buttonWidth
+
+            // a general status of the whole component, from the external
+            enabled: actionsEnabled
+
+            // each button's specific action to notify to the external
+            onClicked: remove()
+        }
+
+        Button {
+            text: qsTr("Rename")
+            font.pointSize: Style.buttons.textFontSize
+            font.bold: Style.buttons.textFontBold
+            height: buttonHeight
+            width: buttonWidth
+
+            enabled: actionsEnabled && textInput.text.length > 0
+
+            onClicked: rename(textInput.text)
+        }
+
+        Button {
+            text: qsTr("New Folder")
+            font.pointSize: Style.buttons.textFontSize
+            font.bold: Style.buttons.textFontBold
+            height: buttonHeight
+            width: buttonWidth
+
+            enabled: actionsEnabled && textInput.text.length > 0
+
+            onClicked: newFolder(textInput.text)
+        }
     }
 
-    Button {
-        text: qsTr("Move")
-        font.pointSize: Style.buttons.textFontSize
-        font.bold: Style.buttons.textFontBold
-        height: parent.buttonHeight
-        width: parent.buttonWidth
+    Rectangle {
+        width: 2 * buttonWidth + Style.buttons.spacing
+        height: buttonHeight
 
-        enabled: parent.actionEnabled
+        anchors.right: parent.right
 
-        onClicked: move()
-    }
+        color: Style.input.backgroundColor
+        border.width: Style.input.borderWidth
+        border.color: Style.input.borderColor
 
-    Button {
-        // stuff of the button
-        text: qsTr("Delete")
-        font.pointSize: Style.buttons.textFontSize
-        font.bold: Style.buttons.textFontBold
-        height: parent.buttonHeight
-        width: parent.buttonWidth
+        TextInput {
+            id: textInput
+            anchors.fill: parent
+            anchors.margins: 2
 
-        // a general status of the whole component, from the external
-        enabled: parent.actionEnabled
-
-        // each button's specific action to notify to the external
-        onClicked: remove()
-    }
-
-    Button {
-        text: qsTr("Rename")
-        font.pointSize: Style.buttons.textFontSize
-        font.bold: Style.buttons.textFontBold
-        height: parent.buttonHeight
-        width: parent.buttonWidth
-
-        enabled: parent.actionEnabled
-
-        onClicked: rename("test")
-    }
-
-    Button {
-        text: qsTr("New Folder")
-        font.pointSize: Style.buttons.textFontSize
-        font.bold: Style.buttons.textFontBold
-        height: parent.buttonHeight
-        width: parent.buttonWidth
-
-        enabled: parent.actionEnabled
-
-        onClicked: newFolder("test")
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignVCenter
+            color: Style.input.textColor
+            font.pointSize: Style.input.textFontSize
+        }
     }
 }
