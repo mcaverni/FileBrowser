@@ -24,7 +24,7 @@ Row {
         id: fileName
         height: parent.height
         width: parent.width - 3*parent.spacing - fileIcon.width - fileType.width - fileSize.width
-        color: Style.list.text
+        color: Style.list.textColor
         text: name
     }
 
@@ -32,7 +32,7 @@ Row {
         id: fileType
         height: parent.height
         width: parent.extraInfoWidth
-        color: Style.list.text
+        color: Style.list.textColor
         text: type
     }
 
@@ -40,7 +40,7 @@ Row {
         id: fileSize
         height: parent.height
         width: parent.extraInfoWidth
-        color: Style.list.text
+        color: Style.list.textColor
         text: size
     }
 }

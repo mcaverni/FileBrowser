@@ -3,6 +3,18 @@ import QtQuick.Controls 2.0
 import app.style 1.0
 
 Row {
+    /*
+     * @Massimo
+     * suggerimento: ugualmente, qui ho preferito racchiudere i bottoni in un componente
+     * vantaggi:
+     * - anchoring relativo ad un componente
+     * - posso decidere di spostare il componente dove mi pare, molto velocemente
+     * - eventualmente potrei sdoppiarlo: uno per ListView (cosa brutta, ma se volessi...)
+     *
+     * suggerimento: inoltre, i bottoni sono disabilitati, quando non hanno azioni che possono compiere (es: non ho selezionato niente da copiare, non posso copiare)
+     * questo da' gia' immediatamente feedback all'utetnte
+     */
+
     // ** custom properties
 
     // to control everything from one place
@@ -17,13 +29,15 @@ Row {
     // **
 
     // stuff of the Row
-    spacing: 20
+    spacing: Style.buttons.spacing
     height: buttonHeight
     width: buttonWidth * 3 + spacing * 2
 
     Button {
         id: copy
-        text: qsTr("copy")
+        text: qsTr("Copy")
+        font.pointSize: Style.buttons.textFontSize
+        font.bold: Style.buttons.textFontBold
         height: parent.buttonHeight
         width: parent.buttonWidth
 
@@ -31,9 +45,12 @@ Row {
 
         onClicked: copy()
     }
+
     Button {
         id: move
-        text: qsTr("move")
+        text: qsTr("Move")
+        font.pointSize: Style.buttons.textFontSize
+        font.bold: Style.buttons.textFontBold
         height: parent.buttonHeight
         width: parent.buttonWidth
 
@@ -41,10 +58,14 @@ Row {
 
         onClicked: move()
     }
+
     Button {
         // stuff of the button
         id: remove
-        text: qsTr("remove")
+        text: qsTr("Delete")
+        font.pointSize: Style.buttons.textFontSize
+        font.bold: Style.buttons.textFontBold
+
         height: parent.buttonHeight
         width: parent.buttonWidth
 

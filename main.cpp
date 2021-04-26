@@ -23,9 +23,13 @@ additional terms, you may contact in writing Frigel Firenze, Via Pisana, 316,
 ===================================================================================
 */
 #include <QGuiApplication>
+#include <QIcon>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QString>
 #include <browser.h>
+
+#define APP_VERSION 1.0
 
 int main(int argc, char *argv[]) {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -34,15 +38,21 @@ int main(int argc, char *argv[]) {
 
   QGuiApplication app(argc, argv);
   QQmlApplicationEngine engine;
+  app.setApplicationName("filebrowser");
+  app.setApplicationVersion(QString::number(APP_VERSION));
+  app.setApplicationDisplayName("File Broser");
+  app.setWindowIcon(QIcon(":/icons/programIcon.jpeg"));
 
   // ** prepare components for QML
   qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:///Style.qml")),
                            "app.style", 1, 0, "Style");
 
-  Browser *left = new Browser();
+  Browser *left =
+      new Browser(QDir::home()); // <-- could be loaded from history file .conf
   engine.rootContext()->setContextProperty("BrowserLeft", left);
 
-  Browser *right = new Browser();
+  Browser *right =
+      new Browser(QDir::home()); // <-- could be loaded from history file .conf
   engine.rootContext()->setContextProperty("BrowserRight", right);
   // ** done
 

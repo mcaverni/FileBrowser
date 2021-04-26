@@ -3,19 +3,53 @@ import QtQuick 2.7
 
 Item {
     readonly property QtObject main: QtObject {
-        property color background: "blue"
-        property color text: "black"
-    }
+        property color backgroundColor: "lightgray"
+        property color borderColor: "black"
+        property int borderWidth: 2
 
-    readonly property QtObject list: QtObject {
-        property color background: "white"
-        property color text: "black"
-        property color border: "black"
+        property color textColor: "black"
+        property int textFontSize: 12 // points
+        property bool textFontBold: false
     }
 
     readonly property QtObject input: QtObject {
-        property color background: "lightyellow"
-        property color text: "black"
-        property color border: "black"
+        property color backgroundColor: "lightyellow"
+        property color borderColor: "black"
+        property int borderWidth: 2
+
+        property color textColor: "black"
+        property int textFontSize: 12 // points
+        property bool textFontBold: false
+    }
+
+    readonly property QtObject popup: QtObject {
+        property color backgroundColor: "lightyellow"
+        property color borderColor: "black"
+        property int borderWidth: 2
+
+        property color textColor: "black"
+        property int textFontSize: 25 // points
+        property bool textFontBold: true
+    }
+
+    readonly property QtObject buttons: QtObject {
+        property int spacing: 10
+        property int textFontSize: 16 // points
+        property bool textFontBold: true
+    }
+
+    readonly property QtObject list: QtObject {
+        property color backgroundColor: "white"
+        property color borderColor: "black"
+        property int borderWidth: 2
+
+        property color textColor: "black"
+        property int textFontSize: 12 // points
+        property bool textFontBold: false
+
+        property int iconSize: 10 // height = width
+        property string iconFile: ""
+        property string iconFolder: ""
+        property string iconLink: ""
     }
 }

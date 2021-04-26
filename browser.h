@@ -36,7 +36,7 @@ class Browser : public QAbstractListModel {
   QDir myDir;
 
 public:
-  Browser();
+  Browser(QDir startDir = QDir::home());
 
   Q_INVOKABLE void browse(QString newPlace);
 

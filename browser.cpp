@@ -24,9 +24,9 @@ additional terms, you may contact in writing Frigel Firenze, Via Pisana, 316,
 */
 #include "browser.h"
 
-Browser::Browser() {
+Browser::Browser(QDir startDir) {
   // start from $HOME on creation
-  myDir.setPath(QDir::homePath());
+  myDir = startDir;
 }
 
 void Browser::browse(QString newPlace) {

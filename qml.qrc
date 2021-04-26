@@ -8,4 +8,7 @@
         <file>RowDelegate.qml</file>
         <file>Confirm.qml</file>
     </qresource>
+    <qresource prefix="/icons">
+        <file>programIcon.jpeg</file>
+    </qresource>
 </RCC>

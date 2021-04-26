@@ -3,7 +3,7 @@ import app.style 1.0
 
 Rectangle {
     id: rectangle
-    color: Style.main.background
+    color: Style.main.backgroundColor
 
     // the focus can be on right or on left
     property var currentLane: null
