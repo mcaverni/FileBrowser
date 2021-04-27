@@ -47,12 +47,12 @@ int main(int argc, char *argv[]) {
                            "app.style", 1, 0, "Style");
 
   QQmlApplicationEngine engine;
-  Browser *left =
-      new Browser(QDir::home()); // <-- could be loaded from history file .conf
+  Browser *left = new Browser(
+      QDir::home()); // TODO: could be loaded from history file .conf
   engine.rootContext()->setContextProperty("BrowserLeft", left);
 
-  Browser *right =
-      new Browser(QDir::home()); // <-- could be loaded from history file .conf
+  Browser *right = new Browser(
+      QDir::home()); // TODO: could be loaded from history file .conf
   engine.rootContext()->setContextProperty("BrowserRight", right);
   // ** done
 

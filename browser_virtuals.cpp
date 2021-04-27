@@ -30,6 +30,9 @@ static QHash<int, QByteArray> myRoleNames = {{MyRoles::Icon, "icon"},
                                              {MyRoles::Path, "path"},
                                              {MyRoles::Size, "size"}};
 
+QSet<QString> myDocsTypes = {"txt", "doc", "docx", "rtf"};
+QSet<QString> myImgTypes = {"png", "jpg", "jpeg", "svg", "pdf"};
+
 int Browser::rowCount(const QModelIndex &parent) const {
   Q_UNUSED(parent)
   return mCurrentDir.count();
@@ -37,23 +40,29 @@ int Browser::rowCount(const QModelIndex &parent) const {
 
 QVariant Browser::data(const QModelIndex &index, int role) const {
   QFileInfo f = mCurrentDir.entryInfoList().at(index.row());
+  // can't do up on root
+  if (mCurrentDir.isRoot() && index.row() == 0)
+    return QVariant();
+
   QString resultString;
   switch (role) {
   case MyRoles::Name:
     resultString = f.fileName();
     break;
   case MyRoles::Icon:
-    if (mCurrentDir == QDir::root())
+    if (f.absoluteFilePath() == QDir::root().absolutePath())
       resultString = "qrc:/icons/hard-drive-4x.png";
-    else if (mCurrentDir == QDir::home())
+    else if (f.absoluteFilePath() == QDir::home().absolutePath())
       resultString = "qrc:/icons/home-4x.png";
     else if (f.isDir())
       resultString = "qrc:/icons/folder-4x.png";
     else if (f.isSymLink())
       resultString = "qrc:/icons/link-intact-4x.png";
     else if (f.isFile()) {
-      if (false)
+      if (myDocsTypes.contains(f.suffix().toLower()))
         resultString = "qrc:/icons/document-4x.png";
+      else if (myImgTypes.contains(f.suffix().toLower()))
+        resultString = "qrc:/icons/image-4x.png";
       else
         resultString = "qrc:/icons/file-4x.png";
     } else

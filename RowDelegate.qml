@@ -14,9 +14,9 @@ Item {
         property int extraInfoWidth: 50
 
         /*
-     * provide: icon, name, type, size
-     * (as texts)
-     */
+         * provide: icon, name, type, size
+         * (as texts)
+         */
         anchors.fill: parent
         spacing: 5
 

@@ -17,5 +17,6 @@
         <file>hard-drive-4x.png</file>
         <file>link-intact-4x.png</file>
         <file>home-4x.png</file>
+        <file>image-4x.png</file>
     </qresource>
 </RCC>

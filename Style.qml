@@ -56,4 +56,11 @@ Item {
         property string iconFolder: ""
         property string iconLink: ""
     }
+
+    states: [
+        State{
+            name: "darkmode"
+            // TODO: define another style
+        }
+    ]
 }
