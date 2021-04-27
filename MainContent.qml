@@ -50,8 +50,8 @@ Rectangle {
         anchors.leftMargin: 10
         anchors.topMargin: 10
 
-        onCopy: doCopy(currentLane.selection, otherLane.selection)
-        onMove: doMove(currentLane.selection, otherLane.selection)
+        onCopy: doCopy(currentLane.selection, otherLane.text)
+        onMove: doMove(currentLane.selection, otherLane.text)
         onRemove: doRemove(currentLane.selection)
         // require extra infos
         onRename: doRename(currentLane.selection, fileName)
@@ -94,7 +94,7 @@ Rectangle {
 
     Confirm {
         id: confirmPopup
-        width: 400
+        width: 500
         height: 200
     }
 

@@ -2,8 +2,10 @@ import QtQuick 2.7
 import QtQuick.Window 2.2
 
 Window {
-    width: 640
+    width: 610
     height: 480
+    minimumHeight: 480
+    minimumWidth: 610
     visible: true
     title: qsTr("File Browser")
 
