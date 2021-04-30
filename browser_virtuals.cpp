@@ -73,14 +73,31 @@ QVariant Browser::data(const QModelIndex &index, int role) const {
       resultString = "dir";
     else if (f.isSymLink())
       resultString = "link";
-    else
-      resultString = "file";
+    else {
+      if (myDocsTypes.contains(f.suffix().toLower()))
+        resultString = "text";
+      else if (myImgTypes.contains(f.suffix().toLower()))
+        resultString = "image";
+      else
+        resultString = "file";
+    }
     break;
   case MyRoles::Size:
-    if (f.isFile())
-      resultString = QString::number(f.size() / 1000.f, 'g', 1).append("kB");
-    else
+    if (!f.isFile())
       resultString = "-";
+    else {
+      if (f.size() < pow(10, 3))
+        resultString = QString::number(f.size()).append("B");
+      else if (f.size() < pow(10, 6))
+        resultString =
+            QString::number(double(f.size()) / pow(10, 3), 'f', 2).append("kB");
+      else if (f.size() < pow(10, 9))
+        resultString =
+            QString::number(double(f.size()) / pow(10, 6), 'f', 2).append("MB");
+      else // if (f.size() < pow(10, 6))
+        resultString =
+            QString::number(double(f.size()) / pow(10, 9), 'f', 2).append("GB");
+    }
     break;
   case MyRoles::Path:
     resultString = f.absoluteFilePath();

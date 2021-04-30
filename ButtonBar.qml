@@ -23,7 +23,8 @@ Column {
     // to control everything from one place
     property int buttonHeight: 30
     property int buttonWidth: 110
-    property bool actionsEnabled: false
+    property bool fileSelected: false
+    property bool laneSelected: false
 
     spacing: 10
     width: buttonWidth * 5 + spacing * 4
@@ -41,7 +42,7 @@ Column {
             height: buttonHeight
             width: buttonWidth
 
-            enabled: actionsEnabled
+            enabled: fileSelected
 
             onClicked: copy()
         }
@@ -53,7 +54,7 @@ Column {
             height: buttonHeight
             width: buttonWidth
 
-            enabled: actionsEnabled
+            enabled: fileSelected
 
             onClicked: move()
         }
@@ -67,7 +68,7 @@ Column {
             width: buttonWidth
 
             // a general status of the whole component, from the external
-            enabled: actionsEnabled
+            enabled: fileSelected
 
             // each button's specific action to notify to the external
             onClicked: remove()
@@ -80,7 +81,7 @@ Column {
             height: buttonHeight
             width: buttonWidth
 
-            enabled: actionsEnabled && textInput.text.length > 0
+            enabled: fileSelected && textInput.text.length > 0
 
             onClicked: rename(textInput.text)
         }
@@ -92,7 +93,7 @@ Column {
             height: buttonHeight
             width: buttonWidth
 
-            enabled: actionsEnabled && textInput.text.length > 0
+            enabled: laneSelected && textInput.text.length > 0
 
             onClicked: newFolder(textInput.text)
         }

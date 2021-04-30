@@ -59,11 +59,8 @@ public:
   Q_INVOKABLE void copy(QString fromPath, QString toPath);
   Q_INVOKABLE void move(QString fromPath, QString toPath);
   Q_INVOKABLE void remove(QString path);
-  Q_INVOKABLE void newFolder(QString path);
-  Q_INVOKABLE void rename(QString fromPath, QString toPath);
-
-signals:
-  void contentChanged(); // only the content, the path is the same
+  Q_INVOKABLE void newFolder(QString folderName);
+  Q_INVOKABLE void rename(QString oldFileName, QString newFileName);
 
   // QAbstractItemModel interface (see in browser_virtuals.cpp)
 public:

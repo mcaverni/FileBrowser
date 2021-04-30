@@ -29,7 +29,6 @@ Browser::Browser(QDir startDir) {
   mCurrentDir.setFilter(QDir::Files | QDir::Dirs | QDir::NoDot);
   mCurrentDir.setSorting(QDir::Type | QDir::Name);
   mCurrentDir.refresh();
-  connect(this, &Browser::currentPathChanged, this, &Browser::contentChanged);
   setCurrentPath(mCurrentDir.absolutePath());
 }
 
@@ -66,12 +65,39 @@ void Browser::remove(QString path) {
   // TODO: implement
 }
 
-void Browser::newFolder(QString path) {
-  // TODO: implement
+void Browser::newFolder(QString folderName) {
+  if (folderName.contains("/")) {
+    qWarning() << "please create one folder at a time!";
+    return;
+  }
+  if (!mCurrentDir.mkdir(folderName)) {
+    qWarning() << "can't create the folder";
+    qWarning() << "reason: something gone bad...";
+    return;
+  }
+  down(folderName);
 }
 
-void Browser::rename(QString fromPath, QString toPath) {
-  // TODO: implement
+void Browser::rename(QString oldFileName, QString newFileName) {
+  QFileInfo source(mCurrentDir.absoluteFilePath(oldFileName));
+  QFileInfo destination(mCurrentDir.absoluteFilePath(newFileName));
+
+  if (!source.exists() || !source.isWritable()) {
+    qWarning() << "can't rename the file";
+    qWarning() << "reason: source issue (no write permissions)";
+    return;
+  }
+  if (destination.exists()) {
+    qWarning() << "can't do the operation: rename";
+    qWarning() << "reason: destination issue (file exists)";
+    return;
+  }
+  beginResetModel();
+  QFile f(source.absoluteFilePath());
+  f.rename(destination.absoluteFilePath());
+  qInfo() << "rename done:" << oldFileName << "-->" << newFileName;
+  // FIXME: doesn't update HMI
+  endResetModel();
 }
 
 QString Browser::currentPath() const { return mCurrentDir.absolutePath(); }

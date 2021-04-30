@@ -57,13 +57,8 @@ Rectangle {
         onRename: doRename(currentLane.selection, fileName)
         onNewFolder: doNewFolder(currentLane.text, folderName)
 
-        actionsEnabled: {
-            if(currentLane !== null && currentLane.selection !== ""){
-                if(otherLane !== null)
-                    return true;
-            }
-            return false;
-        }
+        laneSelected: currentLane !== null && otherLane !== null
+        fileSelected: laneSelected && currentLane.selection !== null
     }
 
     Lane {
@@ -125,20 +120,30 @@ Rectangle {
                 );
     }
 
-    function doNewFolder(thePath, newDir){
-        confirm(MessageProxy.getNewFolderMessage(thePath, newDir),
+    function doNewFolder(withinFolder, folderName){
+        confirm(MessageProxy.getNewFolderMessage(withinFolder, folderName),
                 function (){
-                    console.log(">>> creating:", newDir);
-                    BrowserLeft.newFolder(thePath, newDir);
+                    console.log(">>> creating:", folderName);
+                    if(currentLane === leftLane)
+                        BrowserLeft.newFolder(folderName);
+                    else if(currentLane === rightLane)
+                        BrowserRight.newFolder(folderName);
+                    else
+                        console.error("the current lane is neiter left nor right...");
                 }
                 );
     }
 
-    function doRename(fromPath, toPath){
-        confirm(MessageProxy.getRenameMessage(fromPath, toPath),
+    function doRename(oldName, newName){
+        confirm(MessageProxy.getRenameMessage(oldName, newName),
                 function(){
-                    console.log(">>> renaming:", fromPath, "--->", toPath);
-                    BrowserLeft.rename(fromPath, toPath);
+                    console.log(">>> renaming:", oldName, "--->", newName);
+                    if(currentLane === leftLane)
+                        BrowserLeft.rename(oldName, newName);
+                    else if(currentLane === rightLane)
+                        BrowserRight.rename(oldName, newName);
+                    else
+                        console.error("the current lane is neiter left nor right...");
                 }
                 );
     }

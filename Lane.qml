@@ -79,6 +79,8 @@ Item {
                 color: Style.list.highlightColor
                 opacity: Style.list.highlightOpacity
             }
+
+            ScrollBar.vertical: ScrollBar{}
         }
     }
 
@@ -100,12 +102,13 @@ Item {
         Row {
             anchors.fill: parent
             anchors.margins: 4
+            spacing: 5
 
             TextInput {
                 id: myInputText
 
                 height: parent.height
-                width: myInputTool.width - myInputButton.width - parent.anchors.margins * 2
+                width: myInputTool.width - myInputButton.width - parent.anchors.margins * 2 - parent.spacing
                 clip: true // dynamic content: better to clip it!
 
                 horizontalAlignment: Text.AlignLeft
@@ -138,6 +141,7 @@ Item {
     function changeCurrentPath() {
         deselectItem();
         backendData.currentPath = myInputText.text;
+        selected();
     }
 
     function selectItem(index, name){
@@ -160,6 +164,8 @@ Item {
             backendData.up();
         else
             backendData.down(name);
+        deselectItem();
+        selected();
     }
 }
 

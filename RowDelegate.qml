@@ -10,9 +10,6 @@ Item {
     width: 500 // must be redefined from outside
 
     Row {
-        // here we pass model from the ListView
-        property int extraInfoWidth: 50
-
         /*
          * provide: icon, name, type, size
          * (as texts)
@@ -40,7 +37,7 @@ Item {
         Text {
             id: fileType
             height: parent.height
-            width: parent.extraInfoWidth
+            width: 50
             color: Style.list.textColor
             text: type
         }
@@ -48,9 +45,10 @@ Item {
         Text {
             id: fileSize
             height: parent.height
-            width: parent.extraInfoWidth
+            width: 70
             color: Style.list.textColor
             text: size
+            horizontalAlignment: Text.AlignRight
         }
     }
 
